@@ -28,22 +28,9 @@ public class UserController {
         return Arrays.asList(new UserDto());
     }
 
-    @GetMapping("/user/{id}")
-//    @ResponseBody
-    public UserDto getUser(@PathVariable int id) {
-        UserDto user = getService.getUser(id);
-        return user;
-    }
-
     @DeleteMapping("/user/{id}")
     @ResponseBody
     public UserDto deleteUser(@PathVariable int id) {
         return new UserDto();
-    }
-
-    @PostMapping("/user")
-    public UserDto createUser(@Valid @RequestBody UserDto user) {
-        System.out.println("test");
-        return createService.createUser(user);
     }
 }
