@@ -27,10 +27,4 @@ public class UserController {
     public List<UserDto> listUsers() {
         return Arrays.asList(new UserDto());
     }
-
-    @DeleteMapping("/user/{id}")
-    @ResponseBody
-    public UserDto deleteUser(@PathVariable int id) {
-        return new UserDto();
-    }
 }
