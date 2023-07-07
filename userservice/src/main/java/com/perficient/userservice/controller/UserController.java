@@ -22,12 +22,6 @@ public class UserController {
     @Autowired
     private UserGetService getService;
 
-    @GetMapping("/users")
-    @ResponseBody
-    public List<UserDto> listUsers() {
-        return Arrays.asList(new UserDto());
-    }
-
     @DeleteMapping("/user/{id}")
     @ResponseBody
     public UserDto deleteUser(@PathVariable int id) {
