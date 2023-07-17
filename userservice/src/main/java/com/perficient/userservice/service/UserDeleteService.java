@@ -14,10 +14,9 @@ public class UserDeleteService {
     @Autowired
     private UserRepository repository;
 
-    public String deleteUser(Integer id) {
+    public void deleteUser(Integer id) {
         Optional<User> user = repository.findById(id);
         if (user.isEmpty()) throw new UserNotFoundException("The user doesn't exist");
         repository.delete(user.get());
-        return "User successfully deleted";
     }
 }
