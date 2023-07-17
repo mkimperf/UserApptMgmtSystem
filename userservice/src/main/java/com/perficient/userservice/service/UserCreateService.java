@@ -12,8 +12,9 @@ public class UserCreateService {
     private UserRepository repository;
 
 
-    public UserDto createUser(UserDto user) {
-        repository.save(new User(user));
-        return user;
+    public User createUser(UserDto user) {
+        User newUser = new User(user);
+        repository.save(newUser);
+        return newUser;
     }
 }
