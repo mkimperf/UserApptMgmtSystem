@@ -28,6 +28,10 @@ public class UserDto {
     @Digits(integer = 3, fraction = 0)
     private Integer age;
     
+    public UserDto() {
+    	
+    }
+    
     public UserDto(@NotBlank String firstName, @NotBlank String lastName, @NotBlank String gender,
 			@NotBlank String emailAddress, @NotBlank String phoneNumbers,
 			@NotNull @Digits(integer = 3, fraction = 0) Integer age) {

@@ -83,6 +83,11 @@ public class User {
     private String gender;
     @Email
     private String emailAddress;
+    
+    public User() {
+    	
+    }
+    
     public User(Integer id, @NotBlank String firstName, @NotBlank String lastName, @NotBlank String gender,
 			@Email String emailAddress, @Size(min = 10, max = 10) String phoneNumbers,
 			@Digits(integer = 3, fraction = 0) Integer age) {
