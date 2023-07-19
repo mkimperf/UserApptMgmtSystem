@@ -29,7 +29,6 @@ public class UserUpdateService {
         Optional<User> currUser = repository.findById(id);
         if (currUser.isEmpty()) throw new UserNotFoundException("The user doesn't exist");
         update(user, currUser.get());
-        repository.save(currUser.get());
-        return new UserDto(currUser.get());
+        return new UserDto(repository.save(currUser.get()));
     }
 }

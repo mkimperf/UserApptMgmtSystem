@@ -1,5 +1,4 @@
-package com.perficient.userservice.controller;
-
+package com.perficient.userservice.service;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -24,45 +23,55 @@ import org.springframework.boot.test.context.SpringBootTest;
 import com.perficient.userservice.dto.UserDto;
 import com.perficient.userservice.entity.User;
 import com.perficient.userservice.repository.UserRepository;
-import com.perficient.userservice.service.UserGetService;
 
 @ExtendWith(MockitoExtension.class)
-class UserGetControllerTest {
+class UserGetServiceTest {
 	
 	@InjectMocks
-	private UserGetController controller;
+	private UserGetService service;
 	
 	@Mock
-	private UserGetService service;
+	private UserRepository repository;
 
 	@Test
 	void testGetUser() {
-		UserDto user = new UserDto("first", "last", "M", "test@perficient.com", "0000000000", 21);
-
-		when(service.getUser(anyInt())).thenReturn(user);
-		UserDto returned = controller.getUser(0);
+		Optional<User> user = Optional.of(new User(1, "first", "last", "M", "test@perficient.com", "0000000000", 21));
+//		UserDto user = new UserDto("first", "last", "M", "test@perficient.com", "0000000000", 21);
+		when(repository.findById(anyInt())).thenReturn(user);
+		UserDto returned = service.getUser(0);
 		
 		assertEquals(returned.getFirstName(), "first");
-		verify(service).getUser(anyInt());
+		verify(repository).findById(anyInt());
 	}
 	
+	@Test
+	void testGetUserFail() {
+		Optional<User> user = Optional.empty();
+		when(repository.findById(anyInt())).thenReturn(user);
+		try {
+			service.getUser(0);
+			fail("Exception was not called");
+		} catch (Exception ex) {
+			verify(repository).findById(anyInt());
+		}
+	}
 	
 	@Test
 	void testGetAllUser() {
 		
-		UserDto user1 = new UserDto("first", "last", "M", "test@perficient.com", "0000000000", 21),
-				user2 = new UserDto("firstName", "lastName", "W", "test2@perficient.com", "0000000001", 25);
-		List<UserDto> list = new ArrayList<UserDto>();
+		User user1 = new User(1,"first", "last", "M", "test@perficient.com", "0000000000", 21),
+				user2 = new User(2,"firstName", "lastName", "W", "test2@perficient.com", "0000000001", 25);
+		List<User> list = new ArrayList<User>();
 		list.add(user1);
 		list.add(user2);
 		
-		when(service.getUsers()).thenReturn(list);
-		List<UserDto> returned = controller.listUsers();
+		when(repository.findAll()).thenReturn(list);
+		List<UserDto> returned = service.getUsers();
 		
 		assertEquals(returned.size(), 2);
 		assertEquals(returned.get(0).getFirstName(), "first");
 		assertEquals(returned.get(1).getLastName(), "lastName");
-		verify(service).getUsers();
+		verify(repository).findAll();
 	}
 
 }

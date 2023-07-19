@@ -1,4 +1,4 @@
-package com.perficient.userservice.controller;
+package com.perficient.userservice.service;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyInt;
@@ -20,33 +20,32 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import com.perficient.userservice.dto.UserDto;
 import com.perficient.userservice.entity.User;
 import com.perficient.userservice.repository.UserRepository;
-import com.perficient.userservice.service.UserDeleteService;
 
 @ExtendWith(MockitoExtension.class)
-class UserDeleteControllerTest {
+class UserDeleteServiceTest {
 
 	@InjectMocks
-	private UserDeleteController controller;
+	private UserDeleteService service;
 	
 	@Mock
-	private UserDeleteService service;
+	private UserRepository repository;
 	
 	@Test
 	void test() {
-		doNothing().when(service).deleteUser(anyInt());
+		doNothing().when(repository).deleteById(anyInt());
 		
-		controller.deleteUser(0);
-		verify(service).deleteUser(anyInt());
+		service.deleteUser(0);
+		verify(repository).deleteById(anyInt());
 	}
 	
 	@Test
 	void testException() {
 		try {
-			doThrow(new RuntimeException()).when(service).deleteUser(anyInt());
-			controller.deleteUser(0);
+			doThrow(new RuntimeException()).when(repository).deleteById(anyInt());
+			service.deleteUser(0);
 			fail("Exception was not called");
 		} catch(RuntimeException ex) {
-			verify(service).deleteUser(anyInt());
+			verify(repository).deleteById(anyInt());
 		}
 	}
 

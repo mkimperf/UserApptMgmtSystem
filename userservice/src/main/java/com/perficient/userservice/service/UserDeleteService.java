@@ -15,8 +15,11 @@ public class UserDeleteService {
     private UserRepository repository;
 
     public void deleteUser(Integer id) {
-        Optional<User> user = repository.findById(id);
-        if (user.isEmpty()) throw new UserNotFoundException("The user doesn't exist");
-        repository.delete(user.get());
+        try {
+        	repository.deleteById(id);
+        } catch (IllegalArgumentException ex) {
+        	throw new UserNotFoundException("The user doesn't exist");
+        }
+        
     }
 }
